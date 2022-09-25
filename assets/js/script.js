@@ -19,10 +19,9 @@ var hourBlocks = [];
 var textAreaBlocks = [];
 
 // Array of text events for each schedule row
-var textAreaBlockStrs = [
-    'test string 1', 'test string 2', 'test string 3', 'test string 4',
-    'test string 5', 'test string 6', 'test string 7', 'test string 8', 'test string 9'
-];
+var textAreaBlockStrs = [];
+
+var saveButtonBlocks = [];
 
 // Adds date to header
 headerEl.append(dateEl);
@@ -55,8 +54,10 @@ for (var i = 0; i < 9; i++) {
     scheduleBlocks.push($('<div>').addClass('col-12 d-inline-flex').css('margin-bottom', '1px'));
     hourBlocks.push($('<div>').addClass('hour col-1').text(hourStr)); 
     textAreaBlocks.push($('<textarea>').addClass(`col-11 ${textAreaClass}`));
+    saveButtonBlocks.push($('<button>').addClass('saveBtn').append($('<i>').text('test')));
     scheduleBlocks[i].append(hourBlocks[i]);
     scheduleBlocks[i].append(textAreaBlocks[i]);
+    scheduleBlocks[i].append(saveButtonBlocks[i]);
     rowEl.append(scheduleBlocks[i]);
 }
 
