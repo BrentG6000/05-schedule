@@ -2,55 +2,21 @@ var headerEl = $('.jumbotron');
 var containerEl = $('.container');
 var rowEl = $('<div>').addClass('row');
 var dateEl = $('#currentDay');
-// var scheduleBlock1El = $('<div>');
-// var scheduleBlock2El = $('<div>');
-// var scheduleBlock3El = $('<div>');
-// var scheduleBlock4El = $('<div>');
-// var scheduleBlock5El = $('<div>');
-// var scheduleBlock6El = $('<div>');
-// var scheduleBlock7El = $('<div>');
-// var scheduleBlock8El = $('<div>');
-// var scheduleBlock9El = $('<div>');
-// var hourBlock1El = $('<div>').text('9AM');
-// var hourBlock2El = $('<div>').text('10AM');
-// var hourBlock3El = $('<div>').text('11AM');
-// var hourBlock4El = $('<div>').text('12PM');
-// var hourBlock5El = $('<div>').text('1PM');
-// var hourBlock6El = $('<div>').text('2PM');
-// var hourBlock7El = $('<div>').text('3PM');
-// var hourBlock8El = $('<div>').text('4PM');
-// var hourBlock9El = $('<div>').text('5PM');
-var textBlock1El = $('<textarea>');
-var textBlock2El = $('<textarea>');
-var textBlock3El = $('<textarea>');
-var textBlock4El = $('<textarea>');
-var textBlock5El = $('<textarea>');
-var textBlock6El = $('<textarea>');
-var textBlock7El = $('<textarea>');
-var textBlock8El = $('<textarea>');
-var textBlock9El = $('<textarea>');
 
-// Probably don't need to name the blocks, just use the arrays
-// Using BootStrap! Adjust blocks accordingly
-
-var temp = 9;
-var tempStr;
+var hourLabel = 9;
+var hourStr;
+var textAreaClass;
 var today = moment();
-var currentTime;
+var currentTime = moment().format("hh");
 
 // Array of schedule rows
- var scheduleBlocks = [
-    // scheduleBlock1El, scheduleBlock2El, scheduleBlock3El, scheduleBlock4El, scheduleBlock5El,
-    // scheduleBlock6El, scheduleBlock7El, scheduleBlock8El, scheduleBlock9El
-];
+ var scheduleBlocks = [];
 
 // Array of hour labels for each schedule row
-var hourBlocks = [
-    // hourBlock1El, hourBlock2El, hourBlock3El, hourBlock4El, hourBlock5El, hourBlock6El, hourBlock7El,
-    // hourBlock8El, hourBlock9El
-];
+var hourBlocks = [];
 
-var textAreaBlockS = [];
+// Array of event texts for each schedule row
+var textAreaBlocks = [];
 
 // Array of text events for each schedule row
 var textAreaBlockStrs = [
@@ -63,26 +29,34 @@ headerEl.append(dateEl);
 dateEl.text(today.format("MMMM D YYYY"));
 
 for (var i = 0; i < 9; i++) {
-    temp = (9 + i);
-    if (temp > 12) {
-        temp -= 12;
-        tempStr = temp + "PM";
+    hourLabel = (9 + i);
+
+    if (currentTime > hourLabel) {
+        textAreaClass = "past";
     }
-    else if (temp > 11) {
-        tempStr = temp + "PM";
+    else if (currentTime == hourLabel) {
+        textAreaClass = "present";
     }
-        
     else {
-        tempStr = temp + "AM";
+        textAreaClass = "future";
     }
 
-    scheduleBlocks.push($('<div>').addClass('col-12 d-inline-flex'));
-    hourBlocks.push($('<div>').addClass('hour col-1').text(tempStr)); 
-    textAreaBlockS.push($('<textarea>').addClass('col-11'));
+    if (hourLabel > 12) {
+        hourLabel -= 12;
+        hourStr = hourLabel + "PM";
+    }
+    else if (hourLabel > 11) {
+        hourStr = hourLabel + "PM";
+    } 
+    else {
+        hourStr = hourLabel + "AM";
+    }
 
+    scheduleBlocks.push($('<div>').addClass('col-12 d-inline-flex').css('margin-bottom', '1px'));
+    hourBlocks.push($('<div>').addClass('hour col-1').text(hourStr)); 
+    textAreaBlocks.push($('<textarea>').addClass(`col-11 ${textAreaClass}`));
     scheduleBlocks[i].append(hourBlocks[i]);
-    scheduleBlocks[i].append(textAreaBlockS[i]);
-    
+    scheduleBlocks[i].append(textAreaBlocks[i]);
     rowEl.append(scheduleBlocks[i]);
 }
 
