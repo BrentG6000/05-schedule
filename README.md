@@ -1,32 +1,16 @@
-# <Your-Project-Title>
+# 05-schedule
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
-
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
+This web app is a simple schedule creater. It was designed as part of a programming bootcamp and by completing this assignment I learned to better use jquery and moment.js. I used jquery to find and create element attributes and I used moment.js to compare the current time with the times on the schedule in this app. This app can be used to make an itinerary for the current day. Scheduled events can be added for each hour and are present even after reloading the page.
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+All that is needed to run this app is a web browser. Simply download the code and run locally on your own device or visit the live site here: https://brentg6000.github.io/05-schedule/.
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+To use this app, just click on the colored blocks in between the posted hours and the save buttons, then type whatever you wish to remember and then click the save button. Your text will be saved to that time block even after refreshing. A time block in the past will be grey, future ones are green, and the current time block is red.
 
 ![alt screenshot](/assets/images/screenshot.png)
     
