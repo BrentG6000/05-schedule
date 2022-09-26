@@ -32,8 +32,6 @@ function handleFormSubmit(event) {
 
     var newText = $(this).find('textarea').val();
     var newTextName = $(this).find('textarea').attr("name");
-    console.log(newText);
-    console.log();
 
     if (newTextName === "event-input 0") {
         localStorage.setItem("event0", newText);
@@ -59,13 +57,13 @@ function handleFormSubmit(event) {
     else if (newTextName === "event-input 7") {
         localStorage.setItem("event7", newText);
     }
-    else if (newTextName === "event-input 8") {
+    else {
         localStorage.setItem("event8", newText);
     }
 }
 
-// Adds date to header
 function init() {
+    // Adds date to header
     headerEl.append(dateEl);
     dateEl.text(today.format("MMMM D YYYY"));
 
@@ -95,8 +93,18 @@ function init() {
 
         scheduleBlocks.push($('<div>').addClass('col-12 d-inline-flex').css('margin-bottom', '1px'));
         hourBlocks.push($('<div>').addClass('hour col-1').text(hourStr));
-        
-        textAreaBlocks.push($('<textarea>').addClass(`col-10 ${textAreaClass}`).attr('name', `event-input ${i}`));
+
+        console.log(`event${i}`);
+        var storedText = localStorage.getItem(`event${i}`)
+        console.log(storedText);
+        if (storedText !== null) {
+            textAreaBlocks.push($('<textarea>').addClass(`col-10 ${textAreaClass}`).attr('name', `event-input ${i}`).text(storedText));
+            
+        }
+        else {
+            textAreaBlocks.push($('<textarea>').addClass(`col-10 ${textAreaClass}`).attr('name', `event-input ${i}`));
+        }
+
         saveButtonBlocks.push($('<button>').addClass('saveBtn col-1').attr('height', '80px').append($('<i>').text('Save')));
         formBlocks.push($('<form>').addClass('col-12 d-inline-flex').append(textAreaBlocks[i]).append(saveButtonBlocks[i])
             .on('submit', handleFormSubmit));
@@ -109,11 +117,3 @@ function init() {
 }
 
 init();
-
-// for (var i = 0; i < saveButtonBlocks.length; i++) {
-//     saveButtonBlocks[i].addEventListener("click", function () {
-//         console.log("Button clicked");
-//     });
-// }
-
-// rowEl.on('submit', handleFormSubmit);
