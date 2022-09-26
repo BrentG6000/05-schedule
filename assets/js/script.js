@@ -27,6 +27,9 @@ var textAreaBlockStrs = [];
 // Array of save buttons
 var saveButtonBlocks = [];
 
+
+/* Handles button clicks for adding new events to the schedule. The text from textarea for each time block is saved to local storage
+with a unique key name.*/
 function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -67,9 +70,13 @@ function init() {
     headerEl.append(dateEl);
     dateEl.text(today.format("MMMM D YYYY"));
 
+    // This for loop creates the entire schedule (9 time blocks)
     for (var i = 0; i < 9; i++) {
+        // First time block on schedule is at 9am
         hourLabel = (9 + i);
     
+        /* This if/else block checks if time block is the past, present, or future and the sets a class
+        that will be use later for the textAreaBlock element */
         if (currentTime > hourLabel) {
             textAreaClass = "past";
         }
@@ -80,6 +87,7 @@ function init() {
             textAreaClass = "future";
         }
 
+        // This if/else block adjusts the time text
         if (hourLabel > 12) {
             hourLabel -= 12;
             hourStr = hourLabel + "PM";
@@ -91,28 +99,38 @@ function init() {
             hourStr = hourLabel + "AM";
         }
 
+        // The main schedule block that contains the time, text area, and button is created
         scheduleBlocks.push($('<div>').addClass('col-12 d-inline-flex').css('margin-bottom', '1px'));
+        
+        // The time section is created
         hourBlocks.push($('<div>').addClass('hour col-1').text(hourStr));
 
-        console.log(`event${i}`);
+        // Variable from local storage is checked to see if it contains stored text
         var storedText = localStorage.getItem(`event${i}`)
-        console.log(storedText);
         if (storedText !== null) {
+            // Text area is created with stored text
             textAreaBlocks.push($('<textarea>').addClass(`col-10 ${textAreaClass}`).attr('name', `event-input ${i}`).text(storedText));
             
         }
         else {
+            // Text area is created without stored text
             textAreaBlocks.push($('<textarea>').addClass(`col-10 ${textAreaClass}`).attr('name', `event-input ${i}`));
         }
 
+        // Buttons are created
         saveButtonBlocks.push($('<button>').addClass('saveBtn col-1').attr('height', '80px').append($('<i>').text('Save')));
+        
+        // Text area and buttons are combined under a form
         formBlocks.push($('<form>').addClass('col-12 d-inline-flex').append(textAreaBlocks[i]).append(saveButtonBlocks[i])
             .on('submit', handleFormSubmit));
+        
+        // Hour and form blocks are combined under a schedule block
         scheduleBlocks[i].append(hourBlocks[i]);
         scheduleBlocks[i].append(formBlocks[i]);
         rowEl.append(scheduleBlocks[i]);
     }
 
+    // Schedule blocks are combined under the row element needed for bootstrap
     containerEl.append(rowEl);
 }
 
